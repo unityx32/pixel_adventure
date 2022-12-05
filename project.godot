@@ -38,7 +38,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="dawn_forest"
+config/name="pixel_adventure"
 run/main_scene="res://scenes/management/level.tscn"
 config/icon="res://icon.png"
 
