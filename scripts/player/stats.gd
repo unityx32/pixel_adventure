@@ -2,6 +2,8 @@ extends Node2D
 class_name Stats
 
 onready var player = get_parent()
+onready var collision_area: Area2D = get_node("../collision_area")
+onready var invencibility_timer: Timer = get_node("invencibility_timer")
 
 var shielding: bool = false
 
@@ -94,7 +96,17 @@ func update_mana(type: String, value):
 				current_mana = max_mana
 		"decrase":
 			current_mana -= value
+
+
+
+func _on_collision_area_entered(area):
+	if area.name == "enemy_attack_area":
+		update_health("decrease", area.damage)
+		collision_area.set_deferred("monitoring", false)
+		invencibility_timer.start(area.invencibility_timer)
 	
-func _process(_delta):
-	if Input.is_action_just_pressed("ui_select"):
-		update_health("decrease", 5)
+
+
+func _on_invencibility_timer_timeout():
+	collision_area.set_deferred("monitoring", true)
+

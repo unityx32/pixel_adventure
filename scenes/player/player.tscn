@@ -423,6 +423,8 @@ tracks/1/keys = {
 }
 
 [node name="player" type="KinematicBody2D"]
+collision_layer = 4
+collision_mask = 3
 script = ExtResource( 2 )
 speed = 75
 jump_speed = -175
@@ -464,6 +466,8 @@ drag_margin_h_enabled = true
 drag_margin_v_enabled = true
 
 [node name="attack_area" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
 
 [node name="collision" type="CollisionShape2D" parent="attack_area"]
 visible = false
@@ -474,6 +478,7 @@ disabled = true
 visible = false
 enabled = true
 cast_to = Vector2( 11, 0 )
+collision_mask = 3
 
 [node name="light" type="Light2D" parent="."]
 texture = ExtResource( 4 )
@@ -489,4 +494,18 @@ anims/light_animation = SubResource( 15 )
 [node name="stats" type="Node2D" parent="."]
 script = ExtResource( 5 )
 
+[node name="invencibility_timer" type="Timer" parent="stats"]
+one_shot = true
+
+[node name="collision_area" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+
+[node name="collision" type="CollisionShape2D" parent="collision_area"]
+visible = false
+position = Vector2( -1, 12.5 )
+shape = SubResource( 4 )
+
 [connection signal="animation_finished" from="animation" to="texture" method="_on_animation_finished"]
+[connection signal="timeout" from="stats/invencibility_timer" to="stats" method="_on_invencibility_timer_timeout"]
+[connection signal="area_entered" from="collision_area" to="stats" method="_on_collision_area_entered"]

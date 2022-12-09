@@ -112,3 +112,4 @@ func next_to_wall() -> bool:
 	else:
 		not_on_wall = true
 		return false
+
