@@ -31,7 +31,10 @@ func move_behavior() -> void:
 	if player_ref != null:
 		var distance: Vector2 = player_ref.global_position - global_position
 		var direction: Vector2 = distance.normalized()
-		if abs(direction.x) <= proximity_threshhold:
+		
+		# abs significa "módulo"
+		# o modulo é a distancia de um eixo em relação ao 0
+		if abs(distance.x) <= proximity_threshhold:
 			velocity.x = 0
 			can_attack = true
 		elif floor_collision() and not can_attack:
@@ -65,6 +68,7 @@ func verify_position():
 			texture.flip_h = false
 			floor_ray.position.x = raycast_default_position	
 		
-	
+func kill_enemy():
+	animation.play("kill")
 	
 	
